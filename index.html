@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Matcher - AI-Powered Resume Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-file-alt"></i>
+                    <h1>Resume Matcher</h1>
+                </div>
+                <p class="tagline">AI-Powered Resume Analysis & Job Matching</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-card">
+                    <div class="upload-header">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h2>Upload Your Resume</h2>
+                        <p>Upload your resume in PDF format and get instant matching scores</p>
+                    </div>
+                    
+                    <form id="resumeForm" class="upload-form">
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <input type="file" id="resumeFile" accept=".pdf" hidden>
+                            <div class="upload-placeholder">
+                                <i class="fas fa-file-pdf"></i>
+                                <p>Click to upload or drag and drop your resume (PDF only)</p>
+                                <span class="file-size-limit">Maximum file size: 16MB</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="jobDescription">Job Description</label>
+                            <textarea 
+                                id="jobDescription" 
+                                placeholder="Paste the job description here to analyze how well your resume matches..."
+                                rows="6"
+                                required
+                            ></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-search"></i>
+                            Analyze Resume
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-card">
+                    <div class="results-header">
+                        <h2>Analysis Results</h2>
+                        <button class="close-btn" id="closeResults">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="results-content">
+                        <!-- Overall Score -->
+                        <div class="overall-score" id="overallScore">
+                            <div class="score-circle">
+                                <span class="score-number" id="totalScore">0</span>
+                                <span class="score-label">Total Score</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Detailed Scores -->
+                        <div class="detailed-scores">
+                            <h3>Detailed Analysis</h3>
+                            <div class="score-bars">
+                                <div class="score-item">
+                                    <div class="score-label">
+                                        <span>Skills Match</span>
+                                        <span class="score-value" id="skillsScore">0</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="skillsProgress"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="score-item">
+                                    <div class="score-label">
+                                        <span>Experience Match</span>
+                                        <span class="score-value" id="experienceScore">0</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="experienceProgress"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="score-item">
+                                    <div class="score-label">
+                                        <span>Education Match</span>
+                                        <span class="score-value" id="educationScore">0</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="educationProgress"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Suggestions -->
+                        <div class="suggestions">
+                            <h3>Improvement Suggestions</h3>
+                            <div class="suggestion-content" id="suggestions">
+                                <p>Loading suggestions...</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Parsed Data -->
+                        <div class="parsed-data">
+                            <h3>Extracted Information</h3>
+                            <div class="data-tabs">
+                                <button class="tab-btn active" data-tab="skills">Skills</button>
+                                <button class="tab-btn" data-tab="experience">Experience</button>
+                                <button class="tab-btn" data-tab="education">Education</button>
+                                <button class="tab-btn" data-tab="projects">Projects</button>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="skills-tab">
+                                    <div class="data-content" id="skillsContent"></div>
+                                </div>
+                                <div class="tab-pane" id="experience-tab">
+                                    <div class="data-content" id="experienceContent"></div>
+                                </div>
+                                <div class="tab-pane" id="education-tab">
+                                    <div class="data-content" id="educationContent"></div>
+                                </div>
+                                <div class="tab-pane" id="projects-tab">
+                                    <div class="data-content" id="projectsContent"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Analyzing your resume...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
