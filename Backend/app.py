@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 import tempfile
@@ -16,6 +16,15 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
+# Serve frontend static files
+@app.route('/')
+def serve_index():
+    return send_from_directory(os.path.dirname(__file__), 'index.html')
+
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory(os.path.dirname(__file__), path)
+
 # Configuration
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 ALLOWED_EXTENSIONS = {'pdf'}
@@ -31,8 +40,6 @@ def health_check():
         'status': 'healthy',
         'message': 'Resume Matcher API is running'
     }), 200
-
-
 
 @app.route('/upload-and-match', methods=['POST'])
 def upload_and_match():
@@ -106,7 +113,6 @@ def upload_and_match():
             'error': 'Internal server error',
             'message': 'Failed to process resume'
         }), 500
-
 
 @app.errorhandler(413)
 def too_large(e):
