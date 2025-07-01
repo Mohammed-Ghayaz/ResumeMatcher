@@ -8,4 +8,6 @@ cmds = [
 ]
 
 [start]
-cmd = "gunicorn app:app" 
+cmd = "gunicorn app:app"
+
+CMD ["gunicorn", "app:app"] 
